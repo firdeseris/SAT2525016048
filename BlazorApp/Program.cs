@@ -7,6 +7,8 @@ using BlazorApp.Data;
 using DbContexts;
 using DbModels;
 using DbProviders;
+using Logging;
+using Services;
 using UnitOfWorks;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -45,6 +47,15 @@ builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSe
 builder.Services.AddScoped<IUnitOfWork>(_ => UnitOfWork.Create(connectionString));
 builder.Services.AddScoped(typeof(IDbProvider<>), typeof(DbProvider<>));
 builder.Services.AddTransient(typeof(IDbModel<>), typeof(DbModel<>));
+
+//Logging
+builder.Services.AddSingleton<FileLogger>();
+builder.Services.AddScoped<DbLogger>();
+builder.Services.AddScoped<LogService>();
+builder.Services.AddScoped<LogReader>();
+
+//Modals
+builder.Services.AddScoped<ModalService>();
 
 var app = builder.Build();
 

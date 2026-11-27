@@ -7,17 +7,17 @@ public enum Operation
     [Color("info")]
     [DisplayText("Liste")]
     [Symbol("📋")]
-    List,
+    List = 2,
     [Color("success"), DisplayText("Ekle")]
     [Symbol("➕")]
-    Insert,
+    Insert = 1,
     [Color("warning"), DisplayText("Güncelle")]
     [Symbol("✏️")]
-    Update,
+    Update = 0,
     [Color("danger"), DisplayText("Sil")]
     [Symbol("🗑️")]
-    Delete,
+    Delete = -1,
     [Color("secondary"), DisplayText("İptal")]
     [Symbol("❌")]
-    Cancel,
+    Cancel = 3,
 }

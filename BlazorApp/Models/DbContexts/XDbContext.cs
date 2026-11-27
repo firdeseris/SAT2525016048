@@ -1,4 +1,5 @@
 using Entities;
+using Logging;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -10,6 +11,8 @@ public class XDbContext(DbContextOptions<XDbContext> options) : DbContext(option
     // DbSet özellikleri
     public DbSet<Department> Departments { get; set; }
     public DbSet<Student> Students { get; set; }
+    public DbSet<LogEntryDb> Logs { get; set; }
+    public DbSet<LogEntryTrigger> LogsTrigger { get; set; }
 
 
     // Model oluşturma metodu
@@ -21,6 +24,9 @@ public class XDbContext(DbContextOptions<XDbContext> options) : DbContext(option
         // Tablolar ve şema
         modelBuilder.Entity<Department>().ToTable("Department", "School");
         modelBuilder.Entity<Student>().ToTable("Student", "School");
+        modelBuilder.Entity<LogEntryDb>().ToTable("Logs", "dbo", table => table.ExcludeFromMigrations());
+        modelBuilder.Entity<LogEntryTrigger>().ToTable("Logs_Trigger", "dbo", table => table.ExcludeFromMigrations());
+        modelBuilder.Entity<LogEntryTrigger>().Property(log => log.Operation).IsUnicode(false);
 
         // Bölüm ilişkisi
         modelBuilder.Entity<Student>()
