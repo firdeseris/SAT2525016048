@@ -1,0 +1,99 @@
+# Sıfırdan başlamak için mevcut klasörün yerel Git geçmişini, ayarlarını ve depo bağlantılarını silme
+# Komutu VS Code içinde SAT2525016000 çözüm klasöründe açılan terminalde çalıştırın.
+rmdir /s /q .git
+
+# Komutları VS Code içinde SAT2525016000 çözüm klasöründe açılan terminalde çalıştırın.
+# AD_SOYAD alanına kendi adınızı ve soyadınızı yazın.
+# GitHub hesabı e-postası: 2525016000@ogr.cbu.edu.tr
+# İşbirlikçi e-postası: mehmet.dikmen@cbu.edu.tr
+# Depo adı: SAT2525016000 (çözüm klasörünün adı).
+# 1–4: araç kurulumları; 5–14: depo hazırlığı ve ilk gönderim; 15–20: her güncellemede; 21: işbirlikçi ekleme.
+
+# 1. Git, GitHub CLI ve WinGet kurulumlarını kontrol etme
+git --version
+gh --version
+winget --version
+# Sürüm bilgisi görünen araçların kurulum adımlarını atlayın.
+# Komut bulunamazsa ilgili aracın kurulum adımını uygulayın.
+
+# 2. WinGet kurulumu (kurulu değilse)
+start "" "ms-windows-store://pdp/?ProductId=9NBLGGH4NNS1"
+# Microsoft Store üzerinden Uygulama Yükleyicisi (App Installer) uygulamasını yükleyin veya güncelleyin.
+# VS Code uygulamasını tamamen kapatıp yeniden açın ve terminalde kontrol edin.
+winget --version
+
+# 3. Git kurulumu
+winget install --id Git.Git -e --source winget
+# Kurulum tamamlanınca VS Code uygulamasını tamamen kapatıp yeniden açın.
+git --version
+
+# 4. GitHub CLI (gh) kurulumu
+winget install --id GitHub.cli -e --source winget
+# Kurulum tamamlanınca VS Code uygulamasını tamamen kapatıp yeniden açın.
+gh --version
+
+# 5. Windows CMD üzerinden 2525016000@ogr.cbu.edu.tr ile ilişkili GitHub hesabına giriş yapma ve tarayıcıda onaylama
+gh auth login --hostname github.com --git-protocol https --web
+# GitHub hesabınız yoksa önce web üzerinden 2525016000@ogr.cbu.edu.tr ile bir hesap oluşturun.
+# Tarayıcıda 2525016000@ogr.cbu.edu.tr ile ilişkili GitHub hesabıyla oturum açın.
+gh auth setup-git
+gh auth status
+
+# 6. Yerel Git deposunu başlatma
+git init
+
+# 7. Bu depo için Git kullanıcı adını ve e-posta adresini ayarlama
+git config user.name "AD_SOYAD"
+git config user.email "2525016000@ogr.cbu.edu.tr"
+
+# 8. .gitignore dosyasıyla gereksiz dosyaları dışarıda bırakma
+(
+echo bin/
+echo obj/
+echo .vs/
+echo .DS_Store
+echo *.user
+echo *.suo
+) > .gitignore
+
+# 9. Dosyaları Git takibine ekleme
+git add .
+
+# 10. İlk kaydı oluşturma (commit)
+git commit -m "Ilk kayit"
+
+# 11. Ana dalın adını main olarak ayarlama
+git branch -M main
+
+# 12. GitHub üzerinde SAT2525016000 adlı özel depo oluşturma ve yerel depoya bağlama
+gh repo create SAT2525016000 --private --source=. --remote=origin
+
+# 13. GitHub depo bağlantısını kontrol etme
+git remote -v
+
+# 14. İlk kaydı GitHub deposuna gönderme (push)
+git push -u origin main
+
+# 15. Çalışmaya başlamadan önce güncel değişiklikleri alma (pull)
+git pull --ff-only origin main
+
+# 16. Proje dosyasını düzenlemek için açma ve değişiklikleri kaydetme
+notepad "BlazorApp\Program.cs"
+
+# 17. Değişen dosyaları kontrol etme
+git status
+git diff
+
+# 18. Değişiklikleri kayda hazırlama (add)
+git add .
+
+# 19. Değişiklikleri kaydetme (commit)
+git commit -m "Proje guncellendi"
+
+# 20. Yeni kayıtları GitHub deposuna gönderme (push)
+git push origin main
+
+# 21. mehmet.dikmen@cbu.edu.tr adresini işbirlikçi olarak davet etme
+# Tarayıcıdan davet etme
+gh browse --settings
+# GitHub arayüzünde Collaborators, Add people, mehmet.dikmen@cbu.edu.tr, eşleşen hesabı seçme, Add to repository adımlarını izleyin.
